@@ -107,3 +107,19 @@ Yes — pass `-e SB_pathPrefix="/browser/"` at container startup. See [`pathPref
 > How do I specify `buildTileUrlTemplate` via docker env?
 
 You can not. Consider modifying the dockerfile and using a custom `config.js` file (or `runtime-config.js` for runtime configuration)
+
+> How do I add a healthcheck?
+
+The image doesn't include `curl`, so use `wget` with the container port, not the published port:
+
+```bash
+wget -q --spider http://127.0.0.1:8080/
+```
+
+If you set a path prefix, add it to the URL. For example, with `SB_pathPrefix="/browser/"`:
+
+```bash
+wget -q --spider http://127.0.0.1:8080/browser/
+```
+
+Use `127.0.0.1` rather than `localhost`: nginx only listens on IPv4, and `wget` can fail on `localhost`.

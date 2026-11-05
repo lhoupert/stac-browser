@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Filters: The "Default" sort option shows the configured default sort (e.g. "Default (Time of Data, Descending)") instead of pre-selecting it
-- Docker: The image is based on `nginx/nginx-unprivileged:1-alpine-slim`, as `nginxinc/nginx-unprivileged` is archived. The image no longer includes `curl`, `update-ca-certificates` or the optional nginx modules.
+- Docker: The image is based on `nginx/nginx-unprivileged:1-alpine-slim`, as `nginxinc/nginx-unprivileged` is archived. The image no longer includes `curl`, `update-ca-certificates` or the optional nginx modules. Anything that runs `curl` in the container, such as a healthcheck, needs to change, for example to `wget -q --spider http://127.0.0.1:8080/`, adding your `pathPrefix` to the URL if you set one.
 
 ### Fixed
 
